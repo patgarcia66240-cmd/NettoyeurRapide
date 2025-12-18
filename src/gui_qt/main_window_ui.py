@@ -433,6 +433,29 @@ class MainWindowUI(QMainWindow):
             }
         """)
 
+        # Améliorer le conteneur de navigation avec un fond stylisé
+        if hasattr(self.ui, 'widget_10'):
+            self.ui.widget_10.setStyleSheet("""
+                QWidget {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 rgba(30, 41, 59, 0.95),
+                        stop:1 rgba(51, 65, 85, 0.95));
+                    border: 1px solid rgba(148, 163, 184, 0.2);
+                    border-radius: 16px;
+                    margin: 8px;
+                    padding: 12px 8px;
+                }
+            """)
+
+        # Améliorer aussi le widget parent si nécessaire
+        if hasattr(self.ui, 'widget'):
+            self.ui.widget.setStyleSheet("""
+                QWidget {
+                    background: transparent;
+                    border: none;
+                }
+            """)
+
         # Rendre la fenêtre draggable depuis le header
         self.title_bar.mousePressEvent = self._title_bar_mouse_press
         self.title_bar.mouseMoveEvent = self._title_bar_mouse_move
@@ -452,7 +475,6 @@ class MainWindowUI(QMainWindow):
         # Navigation entre les pages (Windows est dans win_page à l'index 0)
         if hasattr(self.ui, 'btnNavWin'):
             self.ui.btnNavWin.clicked.connect(lambda: self._navigate_to_page(0))
-            #self.ui.btnNavWin.clicked.connect(lambda: print("Bouton Windows cliqué! Navigation vers index 0"))
         else:
             print("ERREUR: btnNavWin n'existe pas!")
 
@@ -496,9 +518,6 @@ class MainWindowUI(QMainWindow):
         # Mettre à jour le stack widget
         self.ui.stackedWidget.setCurrentIndex(page_index)
 
-        # Debug: afficher l'index actuel et le nombre de widgets
-        print(f"Navigation vers index {page_index}, total widgets: {self.ui.stackedWidget.count()}")
-        #print(f"Widget actuel: {self.ui.stackedWidget.currentWidget().__class__.__name__}")
 
         # Mettre à jour le titre (nouvel ordre: 0=Windows, 1=Nettoyage, 2=Analyse Disque, 3=Démarrage)
         titles = ["Windows", "Nettoyage", "Analyse Disque", "Démarrage"]
@@ -526,41 +545,65 @@ class MainWindowUI(QMainWindow):
         self._navigate_to_page(page_index)
 
     def _update_nav_button_style(self, button, is_checked):
-        """Mettre à jour le style d'un bouton de navigation"""
+        """Mettre à jour le style d'un bouton de navigation avec dégradé moderne"""
         if is_checked:
-            # Bouton actif
+            # Bouton actif avec dégradé bleu vif
             button.setStyleSheet("""
                 QPushButton {
-                    background-color: #0763ac;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #4A90E2,
+                        stop:0.5 #357ABD,
+                        stop:1 #2968A3);
                     color: white;
-                    border: 2px solid #0a7ad6;
-                    border-radius: 10px;
-                    padding: 10px;
+                    border: none;
+                    border-radius: 12px;
+                    padding: 12px 16px;
                     font-weight: bold;
+                    font-size: 13px;
+                    text-align: center;
                 }
                 QPushButton:hover {
-                    background-color: #0973c6;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #5BA0F2,
+                        stop:0.5 #458ACD,
+                        stop:1 #3978B3);
                 }
                 QPushButton:pressed {
-                    background-color: #055a8a;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #3978B3,
+                        stop:0.5 #2968A3,
+                        stop:1 #1E5893);
                 }
             """)
         else:
-            # Bouton inactif
+            # Bouton inactif avec dégradé subtil
             button.setStyleSheet("""
                 QPushButton {
-                    background-color: #4a4a4a;
-                    color: #dddddd;
-                    border: 2px solid #3a3a3a;
-                    border-radius: 10px;
-                    padding: 10px;
-                    font-weight: bold;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #6B7280,
+                        stop:0.5 #4B5563,
+                        stop:1 #374151);
+                    color: #E5E7EB;
+                    border: 1px solid #4B5563;
+                    border-radius: 12px;
+                    padding: 12px 16px;
+                    font-weight: 600;
+                    font-size: 13px;
+                    text-align: center;
                 }
                 QPushButton:hover {
-                    background-color: #3c3c3c;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #7B8288,
+                        stop:0.5 #5B6573,
+                        stop:1 #475160);
+                    color: white;
+                    border: 1px solid #5B6573;
                 }
                 QPushButton:pressed {
-                    background-color: #2a2a2a;
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                        stop:0 #5B6268,
+                        stop:0.3 #3B4253,
+                        stop:1 #2B3143);
                 }
             """)
 
@@ -705,6 +748,45 @@ class MainWindowUI(QMainWindow):
                         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                     }
                 """)
+        if event.type() == event.Type.WindowStateChange:
+            if self.isMaximized():
+                self.maximize_btn.setText("❐")
+                self.centralWidget().setStyleSheet("""
+                    QWidget {
+                        background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                            stop:0 #2c3e50, stop:1 #34495e);
+                        border: 2px solid #1a252f;
+                        border-radius: 0px;
+                    }
+                """)
+                # Style pour le header maximisé
+                self.title_bar.setStyleSheet("""
+                    QWidget {
+                        background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                            stop:0 rgba(44, 62, 80, 255), stop:1 rgba(52, 73, 94, 255));
+                        border: none;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                """)
+            else:
+                self.maximize_btn.setText("□")
+                self.centralWidget().setStyleSheet("""
+                    QWidget {
+                        background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                            stop:0 #2c3e50, stop:1 #34495e);
+                        border: 2px solid #1a252f;
+                        border-radius: 15px;
+                    }
+                """)
+                # Style pour le header normal
+                self.title_bar.setStyleSheet("""
+                    QWidget {
+                        background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                            stop:0 rgba(44, 62, 80, 255), stop:1 rgba(52, 73, 94, 255));
+                        border: none;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                """)
         super().changeEvent(event)
 
     def closeEvent(self, event):
@@ -756,24 +838,8 @@ class MainWindowUI(QMainWindow):
 
         print(f"Bouton Windows créé: {self.btnNavWin.objectName()}")
 
-        # Appliquer le style correspondant aux autres boutons de navigation
-        self.btnNavWin.setStyleSheet("""
-            QPushButton {
-                background-color: #4a4a4a;      /* gris foncé par défaut */
-                color: #dddddd;                 /* texte clair */
-                border: 2px solid #3a3a3a;
-                border-radius: 10px;
-                padding: 10px;
-                font-weight: bold;
-            }
-            QPushButton:hover {
-                background-color: #5a5a5a;
-                border: 2px solid #4a4a4a;
-            }
-            QPushButton:pressed {
-                background-color: #055a8a;
-            }
-        """)
+        # Style initial inactif (sera mis à jour par _update_nav_button_style)
+        self.btnNavWin.setChecked(False)
 
         # Ajouter le bouton au layout de navigation existant (après les autres boutons)
         if hasattr(self.ui, 'widget_10') and hasattr(self.ui.widget_10, 'verticalLayout_5'):
@@ -813,18 +879,23 @@ class MainWindowUI(QMainWindow):
         QTimer.singleShot(2000, lambda: self._update_status_message("Prêt", "idle"))
 
     def _fix_navigation_layout(self):
-        """Corriger l'alignement des boutons de navigation pour les aligner avec le reste du contenu"""
+        """Améliorer l'espacement et l'alignement des boutons de navigation"""
         # Obtenir le layout vertical qui contient les boutons de navigation
         nav_layout = self.ui.widget_10.layout()
-        if nav_layout and nav_layout.objectName() == "verticalLayout_5":
-            # Réduire la marge supérieure pour que les boutons commencent plus haut
-            nav_layout.setContentsMargins(0, 5, 0, 10)  # Peu de marge en haut et en bas
+        if nav_layout and hasattr(nav_layout, 'objectName') and nav_layout.objectName() == "verticalLayout_5":
+            # Marges optimales pour les boutons avec dégradé
+            nav_layout.setContentsMargins(8, 8, 8, 8)  # Marges uniformes
 
-            # Réduire l'espacement entre les boutons
-            nav_layout.setSpacing(2)
+            # Espacement entre les boutons pour un effet aéré
+            nav_layout.setSpacing(8)
 
-        # Ajouter une marge supérieure négative au widget_10 pour le remonter
-        self.ui.widget_10.setStyleSheet("margin-top: -10px;")
+        # S'assurer que le style du widget_10 est bien appliqué
+        if hasattr(self.ui, 'widget_10'):
+            current_style = self.ui.widget_10.styleSheet() or ""
+            if "margin-top: -10px;" in current_style:
+                # Remplacer l'ancienne marge négative
+                current_style = current_style.replace("margin-top: -10px;", "")
+            self.ui.widget_10.setStyleSheet(current_style)
 
 
 # Point d'entrée pour tester cette classe spécifiquement

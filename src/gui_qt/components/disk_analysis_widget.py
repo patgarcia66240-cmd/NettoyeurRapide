@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
                               QComboBox, QTreeWidget, QTreeWidgetItem, QTabWidget,
                               QSpinBox, QFileDialog)
 from PySide6.QtCore import Qt, Signal, QTimer, QRect
-from PySide6.QtGui import QPixmap, QPainter, QColor, QPen
+from PySide6.QtGui import QPixmap, QPainter, QColor, QPen, QFont
 
 from .nav_button import NavButton
 
@@ -328,8 +328,11 @@ class DiskAnalysisWidget(QWidget):
                 border-radius: 8px;
             }
             QTabBar::tab {
-                background: rgba(236, 240, 241, 0.8);
-                color: #34495e;
+                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 rgba(185, 185, 185, 0.7),
+                stop:0.5 rgba(178, 180, 180, 0.6),
+                stop:1 rgba(185, 185, 185, 0.7));
+                color: #ffffff;
                 padding: 8px 16px;
                 margin-right: 2px;
                 border-top-left-radius: 4px;
@@ -341,11 +344,13 @@ class DiskAnalysisWidget(QWidget):
             QTabBar::tab:selected {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                     stop:0 #3498db,
-                    stop:1 #135e90;
+                    stop:1 #135e90);
                 color: white;
             }
             QTabBar::tab:hover {
-                background: #257ab2;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #6fa8ed,
+                    stop:1 #306ea9);
                 color: white;
             }
         """)
@@ -374,16 +379,20 @@ class DiskAnalysisWidget(QWidget):
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(10)
 
-        # Visualisation graphique à gauche
+        # Visualisation graphique à gauche (plus grand)
         self.visualization_widget = QLabel("Aucune analyse effectuée")
         self.visualization_widget.setAlignment(Qt.AlignCenter)
+        self.visualization_widget.setMinimumSize(400, 400)  # Taille minimale augmentée
         self.visualization_widget.setStyleSheet("""
-            background: rgba(236, 240, 241, 0.5);
+            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 rgba(236, 240, 241, 0.8),
+                stop:0.5 rgba(189, 195, 199, 0.6),
+                stop:1 rgba(159, 167, 168, 0.7));
             border: 1px solid rgba(189, 195, 199, 0.3);
-            border-radius: 8px;
+            border-radius: 12px;
             color: #7f8c8d;
-            font-size: 14px;
-            min-height: 300px;
+            font-size: 16px;
+            padding: 4px;
         """)
 
         # Informations détaillées à droite
@@ -467,7 +476,7 @@ class DiskAnalysisWidget(QWidget):
             QComboBox {
                 background: #ffffff;
                 color: #2c3e50;
-                border: 2px solid rgba(155, 89, 182, 0.6);
+                border: 2px solid rgba(57, 137, 187, 0.6);
                 border-radius: 6px;
                 padding: 5px 10px;
                 font-family: 'Segoe UI', Arial, sans-serif;
@@ -475,7 +484,7 @@ class DiskAnalysisWidget(QWidget):
                 min-width: 120px;
             }
             QComboBox:hover {
-                border: 2px solid rgba(155, 89, 182, 0.8);
+                border: 2px solid rgba(89, 132, 182, 0.8);
                 background: #f8f9fa;
             }
             QComboBox QLineEdit {
@@ -484,29 +493,11 @@ class DiskAnalysisWidget(QWidget):
                 padding: 2px;
                 color: #2c3e50;
             }
-            QComboBox::drop-down {
-                subcontrol-origin: padding;
-                subcontrol-position: top right;
-                width: 20px;
-                border-left: 2px solid rgba(155, 89, 182, 0.6);
-                background: rgba(155, 89, 182, 0.1);
-                border-top-right-radius: 6px;
-                border-bottom-right-radius: 6px;
-            }
-            QComboBox::down-arrow {
-                border: none;
-                background: transparent;
-                width: 0;
-                height: 0;
-                border-left: 6px solid transparent;
-                border-right: 6px solid transparent;
-                border-top: 8px solid #2c3e50;
-                margin-right: 2px;
-            }
+          
             QComboBox QAbstractItemView {
                 background: #ffffff;
-                border: 2px solid rgba(155, 89, 182, 0.8);
-                selection-background-color: rgba(155, 89, 182, 0.9);
+                border: 2px solid rgba(89, 118, 182, 0.8);
+                selection-background-color: rgba(89, 137, 182, 0.9);
                 selection-color: #ffffff;
                 padding: 5px;
                 outline: none;
@@ -521,7 +512,7 @@ class DiskAnalysisWidget(QWidget):
                 background: rgba(155, 89, 182, 0.1);
             }
             QComboBox QAbstractItemView::item:selected {
-                background: rgba(155, 89, 182, 0.9);
+                background: rgba(49, 116, 184, 0.9);
                 color: #ffffff;
             }
         """)
@@ -574,8 +565,8 @@ class DiskAnalysisWidget(QWidget):
             }
             QTreeWidget::header {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 rgba(155, 89, 182, 0.8),
-                    stop:1 rgba(142, 68, 173, 0.8));
+                    stop:0 rgba(89, 153, 182, 0.8),
+                    stop:1 rgba(68, 101, 173, 0.8));
                 color: white;
                 padding: 8px;
                 border: none;
@@ -618,16 +609,17 @@ class DiskAnalysisWidget(QWidget):
         filter_frame = QFrame()
         filter_layout = QHBoxLayout(filter_frame)
         filter_layout.setContentsMargins(0, 0, 0, 0)
-
-        filter_layout.addWidget(QLabel("Filtrer par extension:"))
+        label_ext=QLabel("Filtrer par extension:")
+        label_ext.setStyleSheet("border:none; background:transparent; font-size:12px; color:#243240;")
+        filter_layout.addWidget(label_ext)
         self.extension_filter = QComboBox()
         self.extension_filter.setEditable(True)
         self.extension_filter.addItem("Tous")
         self.extension_filter.setStyleSheet("""
             QComboBox {
                 background: #ffffff;
-                color: #2c3e50;
-                border: 2px solid rgba(210, 55, 245, 0.6);
+                color: #243240;
+                border: 2px solid rgba(56, 98, 222, 0.6);
                 border-radius: 6px;
                 padding: 5px 10px;
                 font-family: 'Segoe UI', Arial, sans-serif;
@@ -635,7 +627,7 @@ class DiskAnalysisWidget(QWidget):
                 min-width: 120px;
             }
             QComboBox:hover {
-                border: 2px solid rgba(231, 60, 194, 0.8);
+                border: 2px solid rgba(60, 120, 231, 0.8);
                 background: #f8f9fa;
             }
             QComboBox QLineEdit {
@@ -643,22 +635,12 @@ class DiskAnalysisWidget(QWidget):
                 border: none;
                 padding: 2px;
                 color: #2c3e50;
-            }
-            QComboBox::drop-down {
-                subcontrol-origin: padding;
-                subcontrol-position: top right;
-                width: 20px;
-                border-left: 2px solid rgba(231, 60, 203, 0.6);
-                background: rgba(231, 76, 60, 0.1);
-                border-top-right-radius: 6px;
-                border-bottom-right-radius: 6px;
-            }
-           
+            }          
             
             QComboBox QAbstractItemView {
                 background: #ffffff;
-                border: 2px solid rgba(94, 71, 90, 0.8);
-                selection-background-color: rgba(231, 60, 205, 0.9);
+                border: 2px solid rgba(41, 74, 125, 0.8);
+                selection-background-color: rgba(60, 146, 231, 0.9);
                 selection-color: #ffffff;
                 padding: 5px;
                 outline: none;
@@ -671,10 +653,10 @@ class DiskAnalysisWidget(QWidget):
                 background: transparent;
             }
             QComboBox QAbstractItemView::item:hover {
-                background: rgba(231, 60, 205, 0.1);
+                background: rgba(60, 128, 231, 0.1);
             }
             QComboBox QAbstractItemView::item:selected {
-                background: rgba(231, 60, 205, 0.9);
+                background: rgba(60, 114, 231, 0.9);
                 color: #ffffff;
             }
         """)
@@ -697,16 +679,16 @@ class DiskAnalysisWidget(QWidget):
             }
             QTreeWidget::header {
                 background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 rgba(231, 76, 60, 0.8),
-                    stop:1 rgba(192, 57, 43, 0.8));
+                    stop:0 rgba(60, 208, 231, 0.8),
+                    stop:1 rgba(56, 123, 218, 0.8));
                 color: white;
                 padding: 8px;
                 border: none;
                 border-radius: 4px;
             }
             QTreeWidget::item:selected {
-                background: rgba(231, 76, 60, 0.2);
-                color: #2c3e50;
+                background: rgba(122, 168, 232, 0.2);
+                color: #3e4953;
             }
         """)
 
@@ -899,21 +881,27 @@ class DiskAnalysisWidget(QWidget):
         self.progress_bar.setObjectName("diskProgressBar")
         self.progress_bar.setVisible(False)
         self.progress_bar.setFixedHeight(20)
+        self.progress_bar.setFixedWidth(400)
         self.progress_bar.setTextVisible(True)
         self.progress_bar.setStyleSheet("""
             QProgressBar#diskProgressBar {
-                background: rgba(189, 195, 199, 0.3);
-                border: none;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 rgba(189, 195, 199, 0.4),
+                    stop:1 rgba(189, 195, 199, 0.2));
+                border: 1px solid rgba(189, 195, 199, 0.3);
                 border-radius: 10px;
                 text-align: center;
-                color: #2c3e50;
+                color: #e4e4e4;
                 font-weight: 600;
                 height: 20px;
             }
             QProgressBar#diskProgressBar::chunk {
-                background: #667eea;
-                border-radius: 8px;
-                border: 1px solid #5a6fd8;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #7c8ff5,
+                    stop:0.5 #667eea,
+                    stop:1 #5a6fd8);
+                border-radius: 6px;
+                margin: 2px;
             }
         """)
 
@@ -1167,8 +1155,8 @@ class DiskAnalysisWidget(QWidget):
         if not self.scan_results or not self.scan_results['file_types']:
             return
 
-        # Créer une image simple avec les types de fichiers
-        width, height = 400, 300
+        # Créer une image simple avec les types de fichiers (plus grand)
+        width, height = 600, 500  # Taille augmentée pour un camembert plus grand
         pixmap = QPixmap(width, height)
         pixmap.fill(QColor(255, 255, 255))
 
@@ -1194,7 +1182,7 @@ class DiskAnalysisWidget(QWidget):
         )[:7]
 
         start_angle = 0
-        rect = QRect(50, 50, 200, 200)
+        rect = QRect(50, 50, 350, 350)  # Cercle beaucoup plus grand
 
         for i, (ext, data) in enumerate(sorted_types):
             angle = int((data['size'] / total_size) * 360)
@@ -1206,15 +1194,16 @@ class DiskAnalysisWidget(QWidget):
             painter.setPen(QPen(Qt.white, 2))
             painter.drawPie(rect, start_angle * 16, angle * 16)
 
-            # Légende
-            legend_rect = QRect(280, 50 + i * 30, 15, 15)
+            # Légende (ajustée pour le camembert plus grand)
+            legend_rect = QRect(430, 50 + i * 32, 19, 19)  # Carrés de légende plus grands
             painter.drawRect(legend_rect)
             painter.fillRect(legend_rect, color)
 
             percentage = (data['size'] / total_size) * 100
             legend_text = f"{ext or 'Autres'} ({percentage:.1f}%)"
             painter.setPen(QColor(0, 0, 0))
-            painter.drawText(300, 60 + i * 30, legend_text)
+            painter.setFont(QFont("Arial", 11))  # Police plus grande
+            painter.drawText(460, 67 + i * 32, legend_text)  # Texte plus grand
 
             start_angle += angle
 

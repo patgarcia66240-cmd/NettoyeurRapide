@@ -16,7 +16,7 @@ def main():
     """Fonction principale"""
     app = QApplication(sys.argv)
     app.setApplicationName("NettoyeurRapide")
-    app.setOrganizationName("NettoyeurRapide")
+    app.setOrganizationName("Xenatronics")
 
     # Créer la fenêtre principale
     window = MainWindowUI()

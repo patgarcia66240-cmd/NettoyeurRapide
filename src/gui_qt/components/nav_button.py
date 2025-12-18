@@ -79,16 +79,16 @@ class NavButton(QPushButton):
         styles = {
             "primary": {
                 "bg": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #3B7DA9, stop:1 #3BA9CD)",
-                "hover": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5FD9C0, stop:1 #4CB9AD)",
-                "pressed": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #3E9A8C, stop:1 #2B897D)",
-                "border": "#3B7DA9",
+                "hover": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #22669d, stop:1 #3d9288)",
+                "pressed": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #29538e, stop:1 #2B897D)",
+                "border": "#92B5CB",
                 "text": "#FFFFFF"
             },
             "secondary": {
-                "bg": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2D2D30, stop:1 #1E1E1E)",
+                "bg": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #46464a, stop:1 #5f5f5f)",
                 "hover": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #3E3E42, stop:1 #2F2F32)",
-                "pressed": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #1D1D20, stop:1 #0E0E10)",
-                "border": "#3E3E42",
+                "pressed": "qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #2c2c2e, stop:1 #3e3e41)",
+                "border": "#B8B8B9",
                 "text": "#FFFFFF"
             },
             "accent": {
@@ -102,8 +102,7 @@ class NavButton(QPushButton):
 
         sizes = {
             "small": {
-                "width": "100px",
-                "height": "28px",
+                "height": "30px",
                 "padding": "0 4px ",
                 "font": "11px"
             },
@@ -148,16 +147,16 @@ class NavButton(QPushButton):
             }}
 
             QPushButton:disabled {{
-                background: #2D2D30;
-                border: 1px solid #3E3E42;
-                color: #666666;
+                background: #69696d;
+                border: 1px solid #bcbcbc;
+                color: #eae8e8;
             }}
         """
 
     def update_geometry(self):
         """Mettre à jour les dimensions selon la taille"""
         sizes = {
-            "small": QSize(80, 28),
+            "small": QSize(120, 32),
             "medium": QSize(100, 36),
             "large": QSize(120, 44)
         }
