@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"venv_pyside6\\Scripts\\pip.exe\" install psutil)",
+      "Bash(./venv_pyside6/Scripts/python.exe:*)",
+      "Bash(python:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

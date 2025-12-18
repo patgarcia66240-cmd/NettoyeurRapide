@@ -1,0 +1,359 @@
+/*
+ * 🌟 DESIGN PREMIUM MODERNE - NettoyeurRapide
+ * Design moderne et attractif avec couleurs vibrantes et effets glassmorphism
+ */
+
+/* --- Fenêtre principale avec fond moderne --- */
+QMainWindow {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #1A1F2E, stop:0.3 #252B3F, stop:0.5 #2D3348, stop:1 #1A1F2E);
+    color: #E0E6ED;
+    border: none;
+}
+
+QMainWindow > QWidget {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 rgba(26, 31, 46, 0.95), stop:0.5 rgba(37, 43, 63, 0.98), stop:1 rgba(26, 31, 46, 0.95));
+    border-radius: 20px;
+    border: 3px solid rgba(88, 101, 242, 0.3);
+}
+
+/* --- BOUTONS MODERNES AVEC EFFETS VIBRANTS --- */
+QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #5865F2, stop:0.4 #7986CB, stop:1 #5C6BC0);
+    color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    min-height: 48px;
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #7986CB, stop:0.4 #9FA8DA, stop:1 #7E57C2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #3F51B5, stop:0.4 #5C6BC0, stop:1 #3949AB);
+}
+
+QPushButton:disabled {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #424552, stop:0.5 #4C566A, stop:1 #434C5E);
+    color: #9AA5CE;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Boutons vibrants secondaires --- */
+QPushButton[class="secondary"] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #2E3440, stop:0.5 #3B4252, stop:1 #2E3440);
+    color: #D8DEE9;
+    border: 2px solid #5E81AC;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 42px;
+}
+
+QPushButton[class="secondary"]:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #3B4252, stop:0.5 #434C5E, stop:1 #3B4252);
+    border-color: #88C0D0;
+    color: #E0E6ED;
+}
+
+/* --- Boutons danger vibrants --- */
+QPushButton[class="warning"] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #BF616A, stop:0.4 #D08770, stop:1 #EBCCB8);
+    color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    min-height: 42px;
+}
+
+QPushButton[class="warning"]:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #D08770, stop:0.4 #EBCCB8, stop:1 #A3BE8C);
+}
+
+/* --- Cartes avec effet glassmorphism --- */
+QFrame {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(255, 255, 255, 0.05), stop:1 rgba(255, 255, 255, 0.02));
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 0;
+    color: #E0E6ED;
+}
+
+QFrame[class="card"] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 rgba(26, 31, 46, 0.8), stop:0.5 rgba(37, 43, 63, 0.9), stop:1 rgba(26, 31, 46, 0.8));
+    border: 2px solid rgba(88, 101, 242, 0.3);
+    border-radius: 20px;
+    padding: 0;
+}
+
+QFrame[class="toolbar"] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(46, 52, 64, 0.9), stop:0.5 rgba(59, 66, 82, 0.95), stop:1 rgba(46, 52, 64, 0.9));
+    border: 2px solid rgba(88, 101, 242, 0.4);
+    border-radius: 16px;
+    padding: 0;
+}
+
+/* --- Cases à cocher modernes vibrantes --- */
+QCheckBox {
+    color: #E0E6ED;
+    spacing: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px;
+}
+
+QCheckBox::indicator {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #5E81AC;
+    border-radius: 10px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(26, 31, 46, 0.8), stop:1 rgba(37, 43, 63, 0.9));
+}
+
+QCheckBox::indicator:hover {
+    border-color: #88C0D0;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(46, 52, 64, 0.9), stop:1 rgba(59, 66, 82, 0.95));
+}
+
+QCheckBox::indicator:checked {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #5865F2, stop:0.5 #7986CB, stop:1 #5C6BC0);
+    border-color: #8FA1FF;
+    image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyMiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIgNEw5IDEyTDE4IDRiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPgo=);
+}
+
+QCheckBox::indicator:checked:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #7986CB, stop:0.5 #9FA8DA, stop:1 #7E57C2);
+}
+
+/* --- Arbres et listes modernes avec effets --- */
+QTreeView {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(26, 31, 46, 0.95), stop:1 rgba(37, 43, 63, 0.98));
+    border: 2px solid rgba(88, 101, 242, 0.4);
+    border-radius: 16px;
+    padding: 12px;
+    alternate-background-color: rgba(46, 52, 64, 0.3);
+    gridline-color: rgba(88, 101, 242, 0.2);
+    selection-background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #5865F2, stop:0.5 #7986CB, stop:1 #5C6BC0);
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 13px;
+}
+
+QTreeView::item {
+    height: 36px;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 3px;
+    color: #E0E6ED;
+    border: 1px solid transparent;
+}
+
+QTreeView::item:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(88, 101, 242, 0.3), stop:0.5 #3B4252, stop:1 rgba(88, 101, 242, 0.2));
+    border: 1px solid rgba(88, 101, 242, 0.5);
+    
+
+}
+
+QTreeView::item:selected {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #5865F2, stop:0.5 #7986CB, stop:1 #5C6BC0);
+    color: #FFFFFF;
+    border: 2px solid rgba(143, 161, 255, 0.8);
+    
+
+    font-weight: 700;
+}
+
+QTreeView[class="modern-tree"]::branch:has-children:!has-siblings:closed,
+QTreeView[class="modern-tree"]::branch:closed:has-children:has-siblings {
+    border-image: none;
+    image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iNiA2TDE2IDZMMTYgMTZMNiAyMCIgc3Ryb2tlPSIjODhDMEQwIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K);
+}
+
+QTreeView[class="modern-tree"]::branch:open:has-children:!has-siblings,
+QTreeView[class="modern-tree"]::branch:open:has-children:has-siblings {
+    border-image: none;
+    image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHZpZXdCb3g9IjAgMCAyMiAyMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iNiA2TDE2IDE2TDYgMTZMNiAyMCIgc3Ryb2tlPSIjODhDMEQwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K);
+}
+
+/* --- Barres de progression vibrantes --- */
+QProgressBar {
+    border: 2px solid rgba(88, 101, 242, 0.3);
+    border-radius: 16px;
+    text-align: center;
+    font-weight: 800;
+    color: #FFFFFF;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(46, 52, 64, 0.8), stop:1 rgba(59, 66, 82, 0.9));
+    height: 28px;
+    font-size: 12px;
+    
+
+}
+
+QProgressBar::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #5865F2, stop:0.3 #88C0D0, stop:0.6 #A3BE8C, stop:1 #5865F2);
+    border-radius: 14px;
+    margin: 3px;
+    
+
+
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* --- Labels modernes avec typographie améliorée --- */
+QLabel {
+    color: #E0E6ED;
+    background-color: transparent;
+    font-size: 13px;
+    padding: 8px;
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+}
+
+QLabel[class="title"] {
+    font-size: 32px;
+    font-weight: 900;
+    color: #FFFFFF;
+    padding: 20px 0;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #5865F2, stop:0.5 #7986CB, stop:1 #5C6BC0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+QLabel[class="subtitle"] {
+    font-size: 20px;
+    font-weight: 700;
+    color: #D8DEE9;
+    padding: 10px 0;
+}
+
+QLabel[class="info"] {
+    color: #9AA5CE;
+    font-size: 12px;
+    padding: 6px;
+}
+
+QLabel[class="success"] {
+    color: #A3BE8C;
+    font-weight: 700;
+}
+
+QLabel[class="warning"] {
+    color: #EBCB8B;
+    font-weight: 700;
+}
+
+QLabel[class="error"] {
+    color: #BF616A;
+    font-weight: 700;
+}
+
+/* --- Boîtes de dialogue premium --- */
+QDialog {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(26, 31, 46, 0.98), stop:1 rgba(37, 43, 63, 0.99));
+    border: 3px solid rgba(88, 101, 242, 0.4);
+    border-radius: 24px;
+    color: #E0E6ED;
+    
+                0 0 120px rgba(88, 101, 242, 0.2),
+
+}
+
+QDialog QLabel {
+    color: #E0E6ED;
+}
+
+/* --- Scrollbars modernes --- */
+QScrollBar:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(26, 31, 46, 0.6), stop:1 rgba(37, 43, 63, 0.8));
+    width: 16px;
+    border-radius: 12px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #5E81AC, stop:0.7 #88C0D0, stop:1 #5E81AC);
+    border-radius: 10px;
+    min-height: 35px;
+    margin: 3px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 #88C0D0, stop:0.8 #A3BE8C, stop:1 #88C0D0);
+    
+}
+
+/* --- Navigation moderne --- */
+QPushButton[class="navButton"] {
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
+    color: #D8DEE9;
+    font-weight: 600;
+}
+
+QPushButton[class="navButton"]:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 rgba(88, 101, 242, 0.2), stop:0.5 #3B4252, stop:1 rgba(88, 101, 242, 0.3));
+    color: #FFFFFF;
+    border-color: rgba(88, 101, 242, 0.5);
+    
+
+}
+
+QPushButton[class="navButton"][selected="true"] {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #5865F2, stop:0.4 #7986CB, stop:1 #5C6BC0);
+    color: #FFFFFF;
+    border-color: rgba(143, 161, 255, 0.8);
+}
+
+
+/* --- Effets de hover brillants --- */
+QFrame[class="interactive"]:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 rgba(46, 52, 64, 0.9), stop:1 rgba(59, 66, 82, 0.95));
+    border-color: rgba(88, 101, 242, 0.5);
+}

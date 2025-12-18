@@ -1,0 +1,103 @@
+/* Global */
+QMainWindow, QWidget {
+    background: #F4F5F7;
+    color: #1E1E1E;
+    font-size: 13px;
+}
+
+/* Buttons */
+QPushButton {
+    background: #D13C2F;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+}
+QPushButton:hover { background: #A23026; }
+QPushButton:disabled { background: #C7CBD1; color: #F5F6F7; }
+
+QToolButton {
+    background: transparent;
+    color: #DDE1E8;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: left;
+}
+QToolButton:hover { background: rgba(255,255,255,0.08); }
+QToolButton:checked {
+    background: rgba(209,60,47,0.15);
+    color: white;
+}
+
+/* Tabs (left sidebar look) */
+QTabWidget::pane {
+    border: 1px solid #E1E4EA;
+    top: -1px;
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+QTabBar::tab {
+    background: #2B2F36;
+    color: #DDE1E8;
+    border: none;
+    padding: 14px 12px;
+    margin: 2px;
+    width: 170px;
+    border-radius: 8px;
+}
+QTabBar::tab:selected {
+    background: rgba(209,60,47,0.18);
+    color: white;
+}
+QTabBar::tab:hover { background: rgba(255,255,255,0.08); }
+
+/* Group boxes / frames */
+QGroupBox {
+    border: 1px solid #E1E4EA;
+    border-radius: 10px;
+    margin-top: 12px;
+    background: #FFFFFF;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 6px 10px;
+    color: #5A5F6A;
+}
+QFrame#Toolbar {
+    border: 1px solid #E1E4EA;
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
+/* Progress */
+QProgressBar {
+    border: 1px solid #E1E4EA;
+    border-radius: 8px;
+    text-align: center;
+    background: #F7F8FA;
+    height: 16px;
+}
+QProgressBar::chunk {
+    background: #D13C2F;
+    border-radius: 8px;
+}
+
+/* Tree / Table */
+QTreeView, QTableView {
+    background: #FFFFFF;
+    alternate-background-color: #FAFBFC;
+    border: 1px solid #E1E4EA;
+    border-radius: 8px;
+    gridline-color: #E1E4EA;
+}
+QHeaderView::section {
+    background: #F0F2F5;
+    color: #5A5F6A;
+    padding: 6px;
+    border: none;
+    border-right: 1px solid #E1E4EA;
+}
+QTreeView::item:selected, QTableView::item:selected {
+    background: rgba(47,128,237,0.18);
+}
