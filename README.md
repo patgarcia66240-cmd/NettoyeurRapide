@@ -30,7 +30,7 @@ pip install PySide6
 
 1. **Cloner le repository** :
 ```bash
-git clone https://github.com/votre-repo/NettoyeurRapide.git
+git clone https://github.com/patgarcia66240-cmd/NettoyeurRapide.git
 cd NettoyeurRapide
 ```
 
@@ -102,4 +102,4 @@ Pour toute question ou rapport de bug, veuillez ouvrir une issue sur GitHub.
 
 ## 🙏 Crédits
 
-Développé avec ❤️ par [Votre Nom] - 2025
+Développé avec ❤️ par patgarcia66240-cmd - 2025
