@@ -42,7 +42,7 @@ class NavButton(QPushButton):
 
     @sizeType.setter
     def sizeType(self, value):
-        if value in ["small", "medium", "large"]:
+        if value in ["small", "medium", "large", "carre_md", "carre_xl"]:
             self._size = value
             self.update_style()
 
@@ -70,7 +70,7 @@ class NavButton(QPushButton):
     def update_style(self):
         """Appliquer le style en fonction des propriétés"""
         style = self.get_current_style()
-        self.setStyleSheet(style)
+        self.setStyleSheet(style )
         self.update_geometry()
 
     def get_current_style(self):
@@ -103,7 +103,7 @@ class NavButton(QPushButton):
         sizes = {
             "small": {
                 "height": "30px",
-                "padding": "0 4px ",
+                "padding": "0 4px",
                 "font": "11px"
             },
             "medium": {
@@ -115,7 +115,19 @@ class NavButton(QPushButton):
                 "height": "44px",
                 "padding": "12px 24px",
                 "font": "13px"
-            }
+            }, 
+            "carre_md": {
+                "height": "36px",
+                "width": "36px",
+                "font": "12px",
+                "padding": "0px"
+            },
+            "carre_xl": {
+                "height": "44px",
+                "width": "44px",
+                "font": "12px",
+                "padding": "0px"
+            },
         }
 
         current_style = styles[self._nav_type]
@@ -151,6 +163,19 @@ class NavButton(QPushButton):
                 border: 1px solid #bcbcbc;
                 color: #eae8e8;
             }}
+
+            /* Style pour les tooltips */
+            QToolTip {{
+                background: #12447e;
+                color: #ffffff;
+                border: 1px solid #555555;
+                border-radius: 4px;
+                padding: 4px 8px;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                font-size: 12px;
+                font-weight: normal;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            }}
         """
 
     def update_geometry(self):
@@ -158,7 +183,9 @@ class NavButton(QPushButton):
         sizes = {
             "small": QSize(120, 32),
             "medium": QSize(100, 36),
-            "large": QSize(120, 44)
+            "large": QSize(120, 44),
+            "carre_md": QSize(36, 36),
+            "carre_xl": QSize(44, 44),
         }
 
         self.setMinimumSize(sizes[self._size])
@@ -181,3 +208,68 @@ class NavButton(QPushButton):
     def set_size(self, size):
         """Définir la taille du bouton"""
         self.sizeType = size
+
+    # === Méthodes pour les tooltips ===
+
+    def set_tooltip(self, text):
+        """Définir le tooltip du bouton"""
+        self.setToolTip(text)
+        return self  # Pour le chaînage
+
+    def set_tooltip_with_shortcut(self, text, shortcut):
+        """Définir un tooltip avec raccourci clavier"""
+        tooltip_text = f"{text} ({shortcut})"
+        self.setToolTip(tooltip_text)
+        return self
+
+    def set_rich_tooltip(self, title, description, shortcut=None):
+        """Définir un tooltip riche avec titre, description et optionnellement un raccourci"""
+        if shortcut:
+            tooltip_html = f"""
+            <b style="color: #ffffff;">{title}</b><br>
+            <span style="color: #e0e0e0;">{description}</span><br>
+            <small style="color: #a0a0a0;"><i>Raccourci: {shortcut}</i></small>
+            """
+        else:
+            tooltip_html = f"""
+            <b style="color: #ffffff;">{title}</b><br>
+            <span style="color: #e0e0e0;">{description}</span>
+            """
+        self.setToolTip(tooltip_html)
+        return self
+
+    def set_action_tooltip(self, action_name, description=None):
+        """Définir un tooltip pour une action (avec raccourcis suggérés)"""
+        # Raccourcis courants selon le type d'action
+        shortcuts = {
+            "nouveau": "Ctrl+N",
+            "ouvrir": "Ctrl+O",
+            "sauvegarder": "Ctrl+S",
+            "quitter": "Ctrl+Q",
+            "analyser": "F5",
+            "nettoyer": "Ctrl+D",
+            "paramètres": "Ctrl+P",
+            "aide": "F1",
+            "actualiser": "F5",
+            "supprimer": "Del",
+            "copier": "Ctrl+C",
+            "coller": "Ctrl+V",
+            "annuler": "Ctrl+Z",
+        }
+
+        action_lower = action_name.lower()
+        shortcut = shortcuts.get(action_lower, "")
+
+        if description:
+            return self.set_tooltip_with_shortcut(f"{action_name}: {description}", shortcut)
+        else:
+            return self.set_tooltip_with_shortcut(action_name, shortcut)
+
+    def clear_tooltip(self):
+        """Supprimer le tooltip du bouton"""
+        self.setToolTip("")
+        return self
+
+    def has_tooltip(self):
+        """Vérifier si le bouton a un tooltip"""
+        return bool(self.toolTip())

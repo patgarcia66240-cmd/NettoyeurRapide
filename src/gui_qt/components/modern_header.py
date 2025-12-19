@@ -37,6 +37,7 @@ class ModernHeader(QFrame):
                     stop:1 rgba(41, 128, 185, 0.95));
                 border: none;
                 border-bottom: 2px solid rgba(52, 73, 94, 0.3);
+                z-index: 1000;  /* Z-index élevé pour être au-dessus des autres éléments */
             }
         """)
 

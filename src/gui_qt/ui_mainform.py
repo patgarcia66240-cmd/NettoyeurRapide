@@ -228,7 +228,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_3 = QVBoxLayout(self.widget_3)
         self.verticalLayout_3.setSpacing(4)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, -1, 0, 0)
+        self.verticalLayout_3.setContentsMargins(-1, -5, -1, -1)
         self.stackedWidget = QStackedWidget(self.widget_3)
         self.stackedWidget.setObjectName(u"stackedWidget")
         self.stackedWidget.setFrameShadow(QFrame.Shadow.Plain)

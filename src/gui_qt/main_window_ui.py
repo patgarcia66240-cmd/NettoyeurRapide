@@ -499,7 +499,12 @@ class MainWindowUI(QMainWindow):
         """Configurer l'état initial de l'interface"""
         # Afficher la première page (nettoyage)
         self.ui.widget_9.setStyleSheet("background: transparent; border: none;")
-        self.ui.stackedWidget.setStyleSheet("background: transparent; border: none;")
+        self.ui.stackedWidget.setStyleSheet("""
+            background: transparent;
+            border: none;
+            margin-top: 0px;  /* Réduction de l'espace en haut */
+            padding-top: 0px;
+        """)
 
         self.ui.stackedWidget.setCurrentIndex(1)  # Index 1 = Nettoyage
         self.ui.lblTitreNav.setText("Nettoyage")

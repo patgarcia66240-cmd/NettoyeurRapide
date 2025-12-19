@@ -589,7 +589,7 @@ class DiskAnalysisWidget(QWidget):
                 border-bottom: 1px solid rgba(189, 195, 199, 0.1);
             }
             QTreeWidget::item:selected {
-                background: rgba(155, 89, 182, 0.2);
+                background: rgba(3, 15, 27, 0.2);
                 color: #2c3e50;
             }
         """)
@@ -687,7 +687,7 @@ class DiskAnalysisWidget(QWidget):
                 border-radius: 4px;
             }
             QTreeWidget::item:selected {
-                background: rgba(122, 168, 232, 0.2);
+                background: rgba(8, 13, 21, 0.2);
                 color: #3e4953;
             }
         """)
@@ -762,8 +762,10 @@ class DiskAnalysisWidget(QWidget):
             font-family: 'Segoe UI', Arial, sans-serif;
             font-size: 18px;
             font-weight: 600;
-            border-bottom: 2px solid rgba(155, 89, 182, 0.3);
-            padding-bottom: 5px;
+            border:none;
+            border-radius:0px;
+            border-bottom: 3px solid rgba(89, 115, 182, 0.3);
+            padding-bottom: 4px;
         """)
 
         # Bouton SMART dans l'onglet
@@ -772,9 +774,9 @@ class DiskAnalysisWidget(QWidget):
         self.btn_smart.setCursor(Qt.PointingHandCursor)
         self.btn_smart.setStyleSheet("""
             QPushButton {
-                background: #667eea;
-                color: #ffffff;
-                border: 1px solid #5a6fd8;
+                background: transparent;
+                color: #3a86d2;
+                border: 2px solid #3a86d2;
                 border-radius: 8px;
                 padding: 10px 20px;
                 font-family: 'Segoe UI', Arial, sans-serif;
@@ -782,14 +784,14 @@ class DiskAnalysisWidget(QWidget):
                 font-weight: 600;
             }
             QPushButton:hover {
-                background: #764ba2;
+                background: #183f6c;
                 color: #ffffff;
-                border: 1px solid #6b46c1;
+                border: 2px solid #06121c;
             }
             QPushButton:pressed {
-                background: #5a67d8;
+                background: #5a8ad8;
                 color: #ffffff;
-                border: 1px solid #4c5cc5;
+                border: 2px solid #010207;
             }
         """)
 
@@ -810,6 +812,65 @@ class DiskAnalysisWidget(QWidget):
                 font-size: 12px;
                 line-height: 1.5;
             }
+                                            /* Scrollbar verticale moderne */
+            QScrollBar:vertical {
+                background: rgba(42, 42, 42, 0.279);
+                width: 12px;
+                border: none;
+                border-radius: 6px;
+                margin: 0;
+            }
+            QScrollBar::handle:vertical {
+                background: rgba(64, 64, 64, 0.47);
+                border: none;
+                border-radius: 3px;
+                min-height: 20px;
+                margin: 2px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #505050;
+            }
+            QScrollBar::handle:vertical:pressed {
+                background: #0078d4;
+            }
+            QScrollBar::add-line:vertical,
+            QScrollBar::sub-line:vertical {
+                height: 0px;
+                border: none;
+                background: none;
+            }
+            QScrollBar::add-page:vertical,
+            QScrollBar::sub-page:vertical {
+                background: none;
+            }
+            /* Scrollbar horizontale (au cas où) */
+            QScrollBar:horizontal {
+                background: #2a2a2a;
+                height: 12px;
+                border: none;
+                border-radius: 6px;
+                margin: 0;
+            }
+            QScrollBar::handle:horizontal {
+                background: #404040;
+                border: none;
+                border-radius: 2px;
+                min-width: 20px;
+                margin: 2px;
+            }
+            QScrollBar::handle:horizontal:hover {
+                background: #505050;
+            }
+            QScrollBar::add-line:horizontal,
+            QScrollBar::sub-line:horizontal {
+                width: 0px;
+                border: none;
+                background: none;
+            }
+            QScrollBar::add-page:horizontal,
+            QScrollBar::sub-page:horizontal {
+                background: none;
+            }
         """)
         self.smart_info_text.setPlaceholderText("Cliquez sur 'Contrôle SMART' pour analyser l'état de santé du disque...")
 
@@ -828,7 +889,7 @@ class DiskAnalysisWidget(QWidget):
             border-radius: 8px;
         """)
         health_layout = QVBoxLayout(health_frame)
-        health_layout.setContentsMargins(20, 20, 20, 20)
+        health_layout.setContentsMargins(20, 10, 20, 10)
 
         health_title = QLabel("📊 État de Santé")
         health_title.setStyleSheet("""
@@ -844,7 +905,7 @@ class DiskAnalysisWidget(QWidget):
             font-family: 'Segoe UI', Arial, sans-serif;
             font-size: 14px;
             font-weight: 500;
-            padding: 10px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.8);
             border-radius: 6px;
             text-align: center;
@@ -855,7 +916,6 @@ class DiskAnalysisWidget(QWidget):
 
         layout.addWidget(smart_info_frame)
         layout.addWidget(health_frame)
-        layout.addStretch()
 
         self.tab_widget.addTab(smart_widget, "🔧 Contrôle SMART")
 
@@ -885,7 +945,7 @@ class DiskAnalysisWidget(QWidget):
         self.progress_bar.setTextVisible(True)
         self.progress_bar.setStyleSheet("""
             QProgressBar#diskProgressBar {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
                     stop:0 rgba(189, 195, 199, 0.4),
                     stop:1 rgba(189, 195, 199, 0.2));
                 border: 1px solid rgba(189, 195, 199, 0.3);
@@ -896,9 +956,9 @@ class DiskAnalysisWidget(QWidget):
                 height: 20px;
             }
             QProgressBar#diskProgressBar::chunk {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 #7c8ff5,
-                    stop:0.5 #667eea,
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #46adde,
+                    stop:0.5 #0d4a90,
                     stop:1 #5a6fd8);
                 border-radius: 6px;
                 margin: 2px;
@@ -1195,7 +1255,7 @@ class DiskAnalysisWidget(QWidget):
             painter.drawPie(rect, start_angle * 16, angle * 16)
 
             # Légende (ajustée pour le camembert plus grand)
-            legend_rect = QRect(430, 50 + i * 32, 19, 19)  # Carrés de légende plus grands
+            legend_rect = QRect(420, 50 + i * 32, 19, 19)  # Carrés de légende plus grands
             painter.drawRect(legend_rect)
             painter.fillRect(legend_rect, color)
 
@@ -1203,7 +1263,7 @@ class DiskAnalysisWidget(QWidget):
             legend_text = f"{ext or 'Autres'} ({percentage:.1f}%)"
             painter.setPen(QColor(0, 0, 0))
             painter.setFont(QFont("Arial", 11))  # Police plus grande
-            painter.drawText(460, 67 + i * 32, legend_text)  # Texte plus grand
+            painter.drawText(450, 67 + i * 32, legend_text)  # Texte plus grand
 
             start_angle += angle
 
@@ -1338,7 +1398,7 @@ class DiskAnalysisWidget(QWidget):
             # Colorier selon la taille
             percentage = (data['size'] / total_size) * 100
             if percentage > 10:
-                item.setBackground(0, QColor(231, 76, 60, 50))  # Rouge clair
+                item.setBackground(0, QColor(52, 152, 219, 50))  # Bleu clair
             elif percentage > 5:
                 item.setBackground(0, QColor(241, 196, 15, 50))  # Jaune clair
 
@@ -1418,7 +1478,7 @@ class DiskAnalysisWidget(QWidget):
 
             # Colorier selon la taille
             if size > 1024 * 1024 * 1024:  # > 1GB
-                item.setBackground(0, QColor(231, 76, 60, 50))  # Rouge clair
+                item.setBackground(0, QColor(52, 152, 219, 50))  # Bleu clair
             elif size > 100 * 1024 * 1024:  # > 100MB
                 item.setBackground(0, QColor(241, 196, 15, 50))  # Jaune clair
 
@@ -1531,7 +1591,7 @@ class DiskAnalysisWidget(QWidget):
             font-family: 'Segoe UI', Arial, sans-serif;
             font-size: 16px;
             font-weight: 600;
-            padding: 15px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
             text-align: center;
