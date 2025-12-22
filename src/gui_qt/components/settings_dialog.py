@@ -33,7 +33,7 @@ class SettingsDialog(QDialog):
         # Paramètres par défaut
         self.settings = settings or {
             'min_file_age_days': 30,
-            'max_file_size_mb': 100,
+            'max_file_size_kb': 100000,  # 100 MB en KB
             'safe_mode': True,
             'delete_restore_points': False,
             'clear_recycle_bin': True,
@@ -560,7 +560,7 @@ class SettingsDialog(QDialog):
         size_control_layout.setSpacing(16)
 
         self.size_slider = QSlider(Qt.Horizontal)
-        self.size_slider.setRange(1, 1000)
+        self.size_slider.setRange(1, 1000000)  # 1 KB à 1000 MB en KB
         self.size_slider.setStyleSheet("""
             QSlider::groove:horizontal {
                 height: 6px;
@@ -583,9 +583,12 @@ class SettingsDialog(QDialog):
         """)
 
         self.size_spinbox = QSpinBox()
-        self.size_spinbox.setRange(1, 1000)
-        self.size_spinbox.setSuffix(" MB")
+        self.size_spinbox.setRange(1, 1000000)  # 1 KB à 1000 MB en KB
+        self.size_spinbox.setSuffix(" KB")
         self.size_spinbox.setFixedWidth(100)
+
+        # Valeur par défaut: 100 MB = 100000 KB
+        self.size_spinbox.setValue(100000)
 
         size_control_layout.addWidget(self.size_slider, 1)
         size_control_layout.addWidget(self.size_spinbox)
@@ -686,8 +689,8 @@ class SettingsDialog(QDialog):
         self.age_spinbox.valueChanged.connect(self.age_slider.setValue)
 
         # Connecter les sliders et spinboxes pour la taille
-        self.size_slider.valueChanged.connect(self.size_spinbox.setValue)
-        self.size_spinbox.valueChanged.connect(self.size_slider.setValue)
+        self.size_slider.valueChanged.connect(self.on_size_slider_changed)
+        self.size_spinbox.valueChanged.connect(self.on_size_spinbox_changed)
 
         # Connecter les boutons
         self.save_btn.clicked.connect(self.save_settings)
@@ -697,7 +700,7 @@ class SettingsDialog(QDialog):
         """Charger les paramètres depuis QSettings"""
         # Charger depuis QSettings ou utiliser les valeurs par défaut
         self.settings['min_file_age_days'] = self.qsettings.value('min_file_age_days', 30, type=int)
-        self.settings['max_file_size_mb'] = self.qsettings.value('max_file_size_mb', 100, type=int)
+        self.settings['max_file_size_kb'] = self.qsettings.value('max_file_size_kb', 100000, type=int)
         self.settings['safe_mode'] = self.qsettings.value('safe_mode', True, type=bool)
         self.settings['delete_restore_points'] = self.qsettings.value('delete_restore_points', False, type=bool)
         self.settings['clear_recycle_bin'] = self.qsettings.value('clear_recycle_bin', True, type=bool)
@@ -706,7 +709,12 @@ class SettingsDialog(QDialog):
         if hasattr(self, 'age_spinbox'):
             self.age_spinbox.setValue(self.settings['min_file_age_days'])
         if hasattr(self, 'size_spinbox'):
-            self.size_spinbox.setValue(self.settings['max_file_size_mb'])
+            self.size_spinbox.setValue(self.settings['max_file_size_kb'])
+            # Initialiser le suffixe correct
+            self.size_spinbox.setSuffix(self.get_size_suffix(self.settings['max_file_size_kb']))
+            # S'assurer que le slider est synchronisé
+            if hasattr(self, 'size_slider'):
+                self.size_slider.setValue(self.settings['max_file_size_kb'])
         if hasattr(self, 'safe_mode_cb'):
             self.safe_mode_cb.setChecked(self.settings['safe_mode'])
         if hasattr(self, 'restore_points_cb'):
@@ -717,7 +725,7 @@ class SettingsDialog(QDialog):
     def save_settings_to_qsettings(self):
         """Sauvegarder les paramètres dans QSettings"""
         self.qsettings.setValue('min_file_age_days', self.settings['min_file_age_days'])
-        self.qsettings.setValue('max_file_size_mb', self.settings['max_file_size_mb'])
+        self.qsettings.setValue('max_file_size_kb', self.settings['max_file_size_kb'])
         self.qsettings.setValue('safe_mode', self.settings['safe_mode'])
         self.qsettings.setValue('delete_restore_points', self.settings['delete_restore_points'])
         self.qsettings.setValue('clear_recycle_bin', self.settings['clear_recycle_bin'])
@@ -727,7 +735,7 @@ class SettingsDialog(QDialog):
         """Sauvegarder les paramètres"""
         new_settings = {
             'min_file_age_days': self.age_spinbox.value(),
-            'max_file_size_mb': self.size_spinbox.value(),
+            'max_file_size_kb': self.size_spinbox.value(),
             'safe_mode': self.safe_mode_cb.isChecked(),
             'delete_restore_points': self.restore_points_cb.isChecked(),
             'clear_recycle_bin': self.recycle_bin_cb.isChecked(),
@@ -752,13 +760,53 @@ class SettingsDialog(QDialog):
     def reset_save_button(self):
         """Remettre le bouton sauvegarder à son état normal"""
         self.save_btn.setText("Sauvegarder")
+
+    def format_size_display(self, size_kb):
+        """Formater l'affichage de la taille avec l'unité appropriée"""
+        if size_kb < 1024:
+            return f"{size_kb} KB"
+        elif size_kb < 1024 * 1024:
+            size_mb = size_kb / 1024
+            return f"{size_mb:.1f} MB"
+        else:
+            size_gb = size_kb / (1024 * 1024)
+            return f"{size_gb:.1f} GB"
+
+    def on_size_slider_changed(self, value_kb):
+        """Gérer le changement du slider de taille"""
+        # Mettre à jour le spinbox avec la valeur en KB
+        self.size_spinbox.blockSignals(True)  # Éviter la boucle infinie
+        self.size_spinbox.setValue(value_kb)
+        self.size_spinbox.blockSignals(False)
+
+        # Mettre à jour le suffixe du spinbox
+        self.size_spinbox.setSuffix(self.get_size_suffix(value_kb))
+
+    def on_size_spinbox_changed(self, value_kb):
+        """Gérer le changement du spinbox de taille"""
+        # Mettre à jour le slider
+        self.size_slider.blockSignals(True)  # Éviter la boucle infinie
+        self.size_slider.setValue(value_kb)
+        self.size_slider.blockSignals(False)
+
+        # Mettre à jour le suffixe du spinbox
+        self.size_spinbox.setSuffix(self.get_size_suffix(value_kb))
+
+    def get_size_suffix(self, size_kb):
+        """Obtenir le suffixe approprié selon la taille"""
+        if size_kb < 1024:
+            return " KB"
+        elif size_kb < 1024 * 1024:
+            return " MB"
+        else:
+            return " GB"
         
 
     def reset_to_defaults(self):
         """Remettre aux valeurs par défaut"""
         defaults = {
             'min_file_age_days': 30,
-            'max_file_size_mb': 100,
+            'max_file_size_kb': 100000,
             'safe_mode': True,
             'delete_restore_points': False,
             'clear_recycle_bin': True,
@@ -767,7 +815,7 @@ class SettingsDialog(QDialog):
         self.settings = defaults.copy()
 
         self.age_spinbox.setValue(defaults['min_file_age_days'])
-        self.size_spinbox.setValue(defaults['max_file_size_mb'])
+        self.size_spinbox.setValue(defaults['max_file_size_kb'])
         self.safe_mode_cb.setChecked(defaults['safe_mode'])
         self.restore_points_cb.setChecked(defaults['delete_restore_points'])
         self.recycle_bin_cb.setChecked(defaults['clear_recycle_bin'])
